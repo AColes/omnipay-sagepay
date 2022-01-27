@@ -95,13 +95,22 @@ class Response extends AbstractResponse implements RedirectResponseInterface, Co
      */
     public function getRedirectData()
     {
-        if ($this->isRedirect()) {
-            return array(
-                'PaReq' => $this->getDataItem('PAReq'),
+        // P4.00 start
+        if (isset($this->data['CReq'])) {
+            // 3DSv2
+            return [
+                'creq' => $this->data['CReq'],
+                'threeDSSessionData' => $this->data['VPSTxId'],
+            ];
+        } else {
+            // fallback from 3DSv2 to 3DSv1
+            return [
+                'PaReq' => $this->data['PAReq'],
                 'TermUrl' => $this->getRequest()->getReturnUrl(),
-                'MD' => $this->getDataItem('MD'),
-            );
+                'MD' => $this->data['MD'],
+            ];
         }
+        // P4.00 end
     }
 
     /**

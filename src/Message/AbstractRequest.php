@@ -79,7 +79,9 @@ abstract class AbstractRequest extends OmnipayAbstractRequest implements Constan
     {
         $data = array();
 
-        $data['VPSProtocol'] = $this->VPSProtocol;
+        // P4.00 start
+        $data['VPSProtocol'] = $this->getProtocol() ?: $this->VPSProtocol;
+        // P4.00 end
         $data['TxType'] = $this->getTxType();
         $data['Vendor'] = $this->getVendor();
         $data['AccountType'] = $this->getAccountType() ?: static::ACCOUNT_TYPE_E;

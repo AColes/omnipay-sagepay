@@ -76,8 +76,13 @@ class AuthorizeRequest extends DirectAuthorizeRequest
 
         // The test mode is included to determine the redirect URL.
 
+        // P4.00 start
+        $VPSProtocol = $this->getProtocol() ?: $this->VPSProtocol;
+        \Log::debug("sagepay::AuthorizesRequest@getData:: VPSProtocol set to: {$VPSProtocol}");
+        // P4.00 end
+
         return [
-            'VPSProtocol' => $this->VPSProtocol,
+            'VPSProtocol' => $VPSProtocol,// use value determined above
             'TxType' => $this->getTxType(),
             'Vendor' => $this->getVendor(),
             'Crypt' => $this->generateCrypt($this->getCryptData()),

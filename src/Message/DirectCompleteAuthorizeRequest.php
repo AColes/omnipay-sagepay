@@ -20,14 +20,30 @@ class DirectCompleteAuthorizeRequest extends AbstractRequest
         // The issuing bank will return PaRes, but the merchant
         // site must send this result as PARes to Sage Pay.
 
-        $data = array(
-            'MD' => $this->getMd() ?: $this->httpRequest->request->get('MD'),
-            'PARes' => $this->getPaRes() ?: $this->httpRequest->request->get('PaRes'),
-        );
-
-        if (empty($data['MD']) || empty($data['PARes'])) {
-            throw new InvalidResponseException;
+        // P4.00 start
+        if($this->httpRequest->request->has('cres')){
+            \Log::debug("DirectCompleteAuthorizeRequest:: ".print_r($this->httpRequest->request, true));
+            $data = array(
+                'CRes' => $this->httpRequest->request->get('cres'), // inconsistent caps are intentional
+                'VPSTxId' => $this->httpRequest->request->get('threeDSSessionData'),
+            );
+    
+            if (empty($data['CRes']) || empty($data['VPSTxId'])) {
+                \Log::debug("DirectCompleteAuthorizeRequest:: S-H-O-U-L-D    F-A-I-L");
+                // throw new InvalidResponseException;
+            }
+            
+        } else {
+            $data = array(
+                'MD' => $this->httpRequest->request->get('MD'),
+                'PARes' => $this->httpRequest->request->get('PaRes'), // inconsistent caps are intentional
+            );
+    
+            if (empty($data['MD']) || empty($data['PARes'])) {
+                throw new InvalidResponseException;
+            }
         }
+        // P4.00 end
 
         return $data;
     }

@@ -249,4 +249,37 @@ interface ConstantsInterface
     const FRAUD_RESPONSE_CHALLENGE  = 'CHALLENGE';
     const FRAUD_RESPONSE_DENY       = 'DENY';
     const FRAUD_RESPONSE_NOTCHECKED = 'NOTCHECKED';
+
+    // P4.00 start 
+     /**
+      * Flag whether customer's browser can run javascript.
+      */
+     const BROWSER_JAVASCRIPT_YES   = 1;
+     const BROWSER_JAVASCRIPT_NO    = 0;
+ 
+     /**
+      * Fallback browser language
+      */
+     const BROWSER_LANGUAGE = 'en-GB';
+ 
+     /**
+      * Dimensions of the challenge window to be displayed to the cardholder.
+      *
+      * 01 = 250 x 400
+      * 02 = 390 x 400
+      * 03 = 500 x 600
+      * 04 = 600 x 400
+      * 05 = Full screen
+      *
+      * @var string
+      */
+     const CHALLENGE_WINDOW_SIZE_01 = '01';
+     const CHALLENGE_WINDOW_SIZE_02 = '02';
+     const CHALLENGE_WINDOW_SIZE_03 = '03';
+     const CHALLENGE_WINDOW_SIZE_04 = '04';
+     const CHALLENGE_WINDOW_SIZE_05 = '05';
+     // P4.00 end 
+
+
+
 }
